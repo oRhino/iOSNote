@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface MyTableView : UIScrollView<UIScrollViewDelegate>
+@interface MyTableView : UIScrollView
 
 //数据源
 @property(nonatomic, weak) id <MyTableViewDataSource>dataSource;

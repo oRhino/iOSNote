@@ -19,7 +19,6 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
-        self.delegate = self;
         _reuseCells = [NSMutableSet new];
         _usedCells = [NSMutableSet new];
     }
@@ -115,10 +114,6 @@
     return height;
 }
 
-#pragma mark - ScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [self refreshView];
-}
 
 - (void)setDataSource:(id<MyTableViewDataSource>)dataSource{
     _dataSource = dataSource;
