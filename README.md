@@ -5,5 +5,6 @@
 3. 内购的流程
 4. 多Target对项目的管理和应用
 5. SVGAPlayer的使用
+6. AVAudioQueue的使用
 
 
