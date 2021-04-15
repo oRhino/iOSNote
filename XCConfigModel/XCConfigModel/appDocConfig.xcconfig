@@ -1,0 +1,11 @@
+//
+//  appDocConfig.xcconfig
+//  XCConfigModel
+//
+//  Created by hx on 2021/2/21.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+APURL =  "www.appdoc.com"

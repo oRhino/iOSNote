@@ -1,0 +1,13 @@
+//
+//  test.debugConfig.xcconfig
+//  XCConfigModel
+//
+//  Created by hx on 2021/2/20.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+
+
+APURL =  "www.baidu.com"
