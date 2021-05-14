@@ -55,7 +55,7 @@
 
 + (void)load{
     /// Swizzle initWithTarget:action:方法
-    [UILongPressGestureRecognizer sensorsdata_swizzleMethod:@selector(initWithTarget:action:) withMethod:@selector(sensorsdata_trackLongPressGestureAction:)];
+    [UILongPressGestureRecognizer sensorsdata_swizzleMethod:@selector(initWithTarget:action:) withMethod:@selector(sensorsdata_initWithTarget:action:)];
     ////Swizzle addTarget:action:方法
     [UILongPressGestureRecognizer sensorsdata_swizzleMethod:@selector(addTarget:action:) withMethod:@selector(sensorsdata_addTarget:action:)];
 }

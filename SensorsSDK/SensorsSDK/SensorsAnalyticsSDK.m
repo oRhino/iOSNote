@@ -8,8 +8,13 @@
 #import "SensorsAnalyticsSDK.h"
 #include <sys/sysctl.h>
 #import "UIView+SensorsData.h"
+#import <AdSupport/AdSupport.h>
+#import "SensorsAnalyticsKeychainItem.h"
+
 
 static NSString * const SensorsAnalyticsVersion = @"1.0.0";
+static NSString * const SensorsAnalyticsAnonymousId = @"cn.sensorsdata.anonymous_id";
+static NSString * const SensorsAnalyticsKeychainService = @"cn.sensorsdata.SensorsAnalytics.id";
 
 @interface SensorsAnalyticsSDK()
 
@@ -21,10 +26,15 @@ static NSString * const SensorsAnalyticsVersion = @"1.0.0";
 /// 是否为被动启动
 @property(nonatomic, getter=isLaunchedPassively) BOOL launchedPassively;
 
+/// 设备id
+@property(nonatomic, copy) NSString *anonymousId;
+
 @end
 
 
-@implementation SensorsAnalyticsSDK
+@implementation SensorsAnalyticsSDK{
+    NSString *_anonymousId;
+}
 
 + (SensorsAnalyticsSDK *)sharedInstance{
     static dispatch_once_t once;
@@ -91,6 +101,71 @@ static NSString * const SensorsAnalyticsVersion = @"1.0.0";
 #endif
 }
 
+- (void)saveAnonymousId:(NSString *)anonymousId{
+    [[NSUserDefaults standardUserDefaults] setObject:anonymousId forKey:SensorsAnalyticsAnonymousId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    SensorsAnalyticsKeychainItem *item = [[SensorsAnalyticsKeychainItem alloc]initWithService:SensorsAnalyticsKeychainService key:SensorsAnalyticsAnonymousId];
+    if (anonymousId) {
+        //保存到keychain
+        [item update:anonymousId];
+    }else{
+        //删除keychain中的值
+        [item remove];
+    }
+}
+
+- (void)setAnonymousId:(NSString *)anonymousId{
+    _anonymousId = anonymousId;
+    [self saveAnonymousId:anonymousId];
+}
+
+- (NSString *)anonymousId{
+    if (_anonymousId) {
+        return _anonymousId;
+    }
+    
+    _anonymousId = [[NSUserDefaults standardUserDefaults] objectForKey:SensorsAnalyticsAnonymousId];
+    if (_anonymousId) {
+        return _anonymousId;
+    }
+    
+    SensorsAnalyticsKeychainItem *item = [[SensorsAnalyticsKeychainItem alloc]initWithService:SensorsAnalyticsKeychainService key:SensorsAnalyticsAnonymousId];
+    _anonymousId = [item value];
+    if (_anonymousId) {
+        return _anonymousId;
+    }
+//    ASIdentifierManager *manager = [ASIdentifierManager sharedManager];
+//    if (manager.isAdvertisingTrackingEnabled) {
+//        [manager advertisingIdentifier].UUIDString;
+//    }
+    
+    //获取idfa 应用程序有可能没有导入 AdSupport.framework库。
+    Class cls = NSClassFromString(@"ASIdentifierManager");
+    if (cls) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+        id manager = [cls performSelector:@selector(sharedManager)];
+        SEL selector = NSSelectorFromString(@"isAdvertisingTrackingEnabled");
+        BOOL (*isAdvertisingTrackingEnabled)(id,SEL) = (BOOL (*) (id,SEL))[manager methodForSelector:selector];
+        if (isAdvertisingTrackingEnabled(manager,selector)) {
+            _anonymousId = [(NSUUID *)[manager performSelector:@selector(advertisingIdentifier)] UUIDString];
+        }
+#pragma clang diagnostic pop
+    }
+    
+    if (!_anonymousId) {
+        //IDFV
+        _anonymousId = UIDevice.currentDevice.identifierForVendor.UUIDString;
+    }
+    if (!_anonymousId) {
+        //UUID
+        _anonymousId = NSUUID.UUID.UUIDString;
+    }
+    [self saveAnonymousId:_anonymousId];
+    
+    return _anonymousId;
+}
 
 #pragma mark - Application LifeCycle
 - (void)setupListeners{
@@ -172,6 +247,9 @@ static NSString * const SensorsAnalyticsVersion = @"1.0.0";
 /// @param properties 事件属性 key是属性的名称,value则是事件的内容
 - (void)track:(NSString *)eventName properties:(nullable NSDictionary<NSString *,id> *)properties{
     NSMutableDictionary *event = [NSMutableDictionary dictionary];
+    
+    ///标识用户
+    event[@"distinct_id"] = self.anonymousId;
     //设置事件名称
     event[@"event"] = eventName;
     //设置事件发生的时间戳,单位为毫秒

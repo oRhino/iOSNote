@@ -35,6 +35,8 @@
 		006BC12D264BF7FF00F855DC /* UITableView+SensorsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 006BC126264BF7DE00F855DC /* UITableView+SensorsData.m */; };
 		008CE33B264E7D260007294C /* UIGestureRecognizer+SensorsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 008CE339264E7D260007294C /* UIGestureRecognizer+SensorsData.m */; };
 		008CE340264E7D2D0007294C /* UIGestureRecognizer+SensorsData.h in Headers */ = {isa = PBXBuildFile; fileRef = 008CE338264E7D260007294C /* UIGestureRecognizer+SensorsData.h */; };
+		008CE350264E94720007294C /* SensorsAnalyticsKeychainItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 008CE343264E94420007294C /* SensorsAnalyticsKeychainItem.h */; };
+		008CE355264E94760007294C /* SensorsAnalyticsKeychainItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 008CE344264E94420007294C /* SensorsAnalyticsKeychainItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		006BC126264BF7DE00F855DC /* UITableView+SensorsData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+SensorsData.m"; sourceTree = "<group>"; };
 		008CE338264E7D260007294C /* UIGestureRecognizer+SensorsData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+SensorsData.h"; sourceTree = "<group>"; };
 		008CE339264E7D260007294C /* UIGestureRecognizer+SensorsData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+SensorsData.m"; sourceTree = "<group>"; };
+		008CE343264E94420007294C /* SensorsAnalyticsKeychainItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorsAnalyticsKeychainItem.h; sourceTree = "<group>"; };
+		008CE344264E94420007294C /* SensorsAnalyticsKeychainItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorsAnalyticsKeychainItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,8 @@
 				00659B2E25CF85AE0076659D /* SensorsSDK.h */,
 				00659BA525CF8C200076659D /* SensorsAnalyticsSDK.h */,
 				00659BA625CF8C200076659D /* SensorsAnalyticsSDK.m */,
+				008CE343264E94420007294C /* SensorsAnalyticsKeychainItem.h */,
+				008CE344264E94420007294C /* SensorsAnalyticsKeychainItem.m */,
 				006BC0A2264A6A0800F855DC /* NSObject+SASwizzler.h */,
 				006BC0A3264A6A0800F855DC /* NSObject+SASwizzler.m */,
 				006BC0A8264A6BD400F855DC /* UIViewController+SensorsData.h */,
@@ -172,6 +178,7 @@
 				006BC0A4264A6A0800F855DC /* NSObject+SASwizzler.h in Headers */,
 				006BC0AA264A6BD400F855DC /* UIViewController+SensorsData.h in Headers */,
 				006BC127264BF7DE00F855DC /* UITableView+SensorsData.h in Headers */,
+				008CE350264E94720007294C /* SensorsAnalyticsKeychainItem.h in Headers */,
 				008CE340264E7D2D0007294C /* UIGestureRecognizer+SensorsData.h in Headers */,
 				00659BA725CF8C200076659D /* SensorsAnalyticsSDK.h in Headers */,
 				006396A9264D30D900AB7858 /* UIScrollView+SensorsData.h in Headers */,
@@ -291,6 +298,7 @@
 				006BC0BF264A97DB00F855DC /* UIApplication+SensorsData.m in Sources */,
 				006BC0AB264A6BD400F855DC /* UIViewController+SensorsData.m in Sources */,
 				006BC117264BCF4700F855DC /* UIView+SensorsData.m in Sources */,
+				008CE355264E94760007294C /* SensorsAnalyticsKeychainItem.m in Sources */,
 				006396B4264D4C5B00AB7858 /* UICollectionView+SensorsData.m in Sources */,
 				006BC122264BE00800F855DC /* UIControl+SensorsData.m in Sources */,
 			);
