@@ -28,6 +28,8 @@ static NSString * const SensorsAnalyticsKeychainService = @"cn.sensorsdata.Senso
 
 /// 设备id
 @property(nonatomic, copy) NSString *anonymousId;
+/// 时间开始发生的时间戳
+@property(nonatomic, strong) NSMutableDictionary <NSString *,NSDictionary *>*trackTimer;
 
 @end
 
@@ -53,6 +55,7 @@ static NSString * const SensorsAnalyticsKeychainService = @"cn.sensorsdata.Senso
         
         //设置是否被动启动标记
         _launchedPassively = UIApplication.sharedApplication.backgroundTimeRemaining != UIApplicationBackgroundFetchIntervalNever;
+        _trackTimer = [NSMutableDictionary dictionary];
         [self setupListeners];
     }
     return self;
@@ -166,6 +169,13 @@ static NSString * const SensorsAnalyticsKeychainService = @"cn.sensorsdata.Senso
     
     return _anonymousId;
 }
+
+
+#pragma mark - Property
++ (double)currentTime{
+    return [[NSDate date] timeIntervalSince1970] * 1000;
+}
+
 
 #pragma mark - Application LifeCycle
 - (void)setupListeners{
@@ -341,11 +351,106 @@ static NSString * const SensorsAnalyticsKeychainService = @"cn.sensorsdata.Senso
 @end
 
 
+static NSString * const SensorsAnalyticsEventBeginKey = @"event_begin";
+static NSString * const SensorsAnalyticsDurationKey = @"event_duration";
+static NSString * const SensorsAnalyticsIsPauseKey = @"is_pause";
+
+
+@implementation SensorsAnalyticsSDK(Timer)
+
+
+/// 系统启动时间
++ (double)systemUpTime{
+    return NSProcessInfo.processInfo.systemUptime * 1000;
+}
+
+
+/// 开始统计事件时长
+/// 调用这个接口时,并不会真正触发一次事件,只是开始计时
+/// @param event 事件名
+- (void)trackTimerStart:(NSString *)event{
+    //记录事件开始时间
+    self.trackTimer[event] = @{SensorsAnalyticsEventBeginKey:@([SensorsAnalyticsSDK systemUpTime])};
+}
 
 
 
+/// 结束事件时长统计,计算时长
+/// trackTimerStart: - trackTimerEnd: 如果多次调用trackTimerStart:  按最后一次,如果没有调用trackTimerStart:  按普通事件处理
+/// @param event 事件名
+/// @param properties 事件属性
+- (void)trackTimerEnd:(NSString *)event properties:(nullable NSDictionary *)properties{
+    
+    NSDictionary *eventTimer = self.trackTimer[event];
+    if (!eventTimer) {
+        return [self track:event properties:properties];
+    }
+    
+    NSMutableDictionary *p = [NSMutableDictionary dictionaryWithDictionary:properties];
+    
+    //移除
+    [self.trackTimer removeObjectForKey:event];
+    
+    //事件开始时间
+    double beginTime = [(NSNumber *)eventTimer[SensorsAnalyticsEventBeginKey] doubleValue];
+    
+    //获取当前时间 -> 获取当前系统启动时间
+    double currentTime = [SensorsAnalyticsSDK systemUpTime];
+    
+    //计算事件时长
+    double eventDuration = currentTime - beginTime;
+    
+    //设置事件时长属性
+    [p setObject:@([[NSString stringWithFormat:@"%.3lf",eventDuration] floatValue]) forKey:@"$event_duration"];
+    
+    //触发事件
+    [self track:event properties:p];
+    
+}
 
 
+/// 暂停统计事件时长
+/// 如果该事件未开始,既没有调用-trackStart:方法,则不作任何操作
+/// @param event 事件名
+- (void)trackTimerPause:(NSString *)event{
+    
+    NSMutableDictionary *eventTimer = [self.trackTimer[event] mutableCopy];
+    
+    //如果没有开始,直接返回
+    if (!eventTimer) {
+        return;
+    }
+    
+    //如果该事件时长已经暂停,直接返回,不作任何处理
+    if ([eventTimer[SensorsAnalyticsIsPauseKey] boolValue]) {
+        return;
+    }
+    
+    ///获取系统当前启动时间
+    double systemUpTime = [SensorsAnalyticsSDK systemUpTime];
+    
+    ///获取开始时间
+//    double
+    
+}
+
+
+/// 恢复统计事件时长
+/// 如果该事件并没暂停,既没有调用-trackTimerPause:方法,则没有影响
+/// @param event 事件名
+- (void)trackTimerResume:(NSString *)event{
+    
+    
+}
+
+@end
+
+
+
+//systemUpTime
+/*
+ 系统启动时间”，也叫开机时间，是指设备开机后一共运行了多少秒(设备休眠不统计在内)，并且不会受到系统时间更改的影响。如果我们使用systemUpTime来计算$event_duration属性，就会非常准确了。
+ */
 
 
 

@@ -7,7 +7,7 @@
 
 #import "ViewController.h"
 #import "TargetProxy.h"
-
+#import <SensorsSDK/SensorsSDK.h>
 
 @interface ViewController ()
 
@@ -40,6 +40,7 @@
 
 - (void)buttonClick{
     
+    [[SensorsAnalyticsSDK sharedInstance] trackTimerStart:@"doSomething"];
 }
 
 - (void)labelClick{
@@ -71,6 +72,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self testTargetProxy];
+    
+    [[SensorsAnalyticsSDK sharedInstance] trackTimerEnd:@"doSomething" properties:nil];
 }
 
 - (void)testTargetProxy {
