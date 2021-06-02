@@ -18,3 +18,10 @@ https://github.com/Tencent/QMUI_iOS/issues/1168
     }
     //....
  }
+
+//自定义键盘 隐藏pad上面的复制粘贴栏
+ textField.inputView = [[UIView alloc]initWithFrame:CGRectZero];
+ UITextInputAssistantItem * item = [textField inputAssistantItem];
+ item.leadingBarButtonGroups = @[];
+ item.trailingBarButtonGroups = @[];
+
