@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		005DDDE12660D3C700607EEF /* Demo_debug_config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 005DDDE02660D3C700607EEF /* Demo_debug_config.xcconfig */; };
+		005DDDE82660D51500607EEF /* Demo_release_config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 005DDDE62660D50200607EEF /* Demo_release_config.xcconfig */; };
+		005DDDEB2660D51800607EEF /* Demo_common_config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 005DDDE72660D50F00607EEF /* Demo_common_config.xcconfig */; };
 		00639693264D248400AB7858 /* TargetProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0063968D264D247700AB7858 /* TargetProxy.m */; };
 		00659B5725CF87250076659D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00659B5625CF87250076659D /* AppDelegate.m */; };
 		00659B5A25CF87250076659D /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00659B5925CF87250076659D /* SceneDelegate.m */; };
@@ -53,6 +56,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		005DDDE02660D3C700607EEF /* Demo_debug_config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Demo_debug_config.xcconfig; sourceTree = "<group>"; };
+		005DDDE62660D50200607EEF /* Demo_release_config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Demo_release_config.xcconfig; sourceTree = "<group>"; };
+		005DDDE72660D50F00607EEF /* Demo_common_config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Demo_common_config.xcconfig; sourceTree = "<group>"; };
 		0063968C264D247700AB7858 /* TargetProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TargetProxy.h; sourceTree = "<group>"; };
 		0063968D264D247700AB7858 /* TargetProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TargetProxy.m; sourceTree = "<group>"; };
 		00659B5225CF87250076659D /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +132,9 @@
 		00659B5425CF87250076659D /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				005DDDE02660D3C700607EEF /* Demo_debug_config.xcconfig */,
+				005DDDE62660D50200607EEF /* Demo_release_config.xcconfig */,
+				005DDDE72660D50F00607EEF /* Demo_common_config.xcconfig */,
 				00659B5525CF87250076659D /* AppDelegate.h */,
 				00659B5625CF87250076659D /* AppDelegate.m */,
 				00659B5825CF87250076659D /* SceneDelegate.h */,
@@ -272,9 +281,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				005DDDEB2660D51800607EEF /* Demo_common_config.xcconfig in Resources */,
 				00659B6525CF87290076659D /* LaunchScreen.storyboard in Resources */,
+				005DDDE12660D3C700607EEF /* Demo_debug_config.xcconfig in Resources */,
 				00659B6225CF87290076659D /* Assets.xcassets in Resources */,
 				00659B6025CF87250076659D /* Main.storyboard in Resources */,
+				005DDDE82660D51500607EEF /* Demo_release_config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +484,7 @@
 		};
 		00659B8225CF87290076659D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 005DDDE02660D3C700607EEF /* Demo_debug_config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -490,6 +503,7 @@
 		};
 		00659B8325CF87290076659D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 005DDDE62660D50200607EEF /* Demo_release_config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
