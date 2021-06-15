@@ -9,12 +9,4 @@
 7. CoreML && Create ML
 8. 乐理知识/五线谱
 9. symbol符号,weak def,weak import
-10.
-```
-//自定义键盘 隐藏pad上面的复制粘贴栏
- textField.inputView = [[UIView alloc]initWithFrame:CGRectZero];
- UITextInputAssistantItem * item = [textField inputAssistantItem];
- item.leadingBarButtonGroups = @[];
- item.trailingBarButtonGroups = @[];
-```
 

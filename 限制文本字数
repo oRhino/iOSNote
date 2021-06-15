@@ -1,0 +1,27 @@
+限制文本字数出现的crash
+https://github.com/Tencent/QMUI_iOS/issues/1168
+
+解决方案
+1. 关闭三指操作<粗暴>
+
+- (UIEditingInteractionConfiguration)editingInteractionConfiguration{
+    return UIEditingInteractionConfigurationNone;
+}
+
+2. 貌似不管用
+[textField addTarget:self action:@selector(textFieldTextEditingChanged) forControlEvents:UIControlEventEditingChanged];
+
+- (void)textFieldTextEditingChanged
+{
+    if (textField.undoManager.undoing) {
+        return;
+    }
+    //....
+ }
+
+//自定义键盘 隐藏pad上面的复制粘贴栏
+ textField.inputView = [[UIView alloc]initWithFrame:CGRectZero];
+ UITextInputAssistantItem * item = [textField inputAssistantItem];
+ item.leadingBarButtonGroups = @[];
+ item.trailingBarButtonGroups = @[];
+
